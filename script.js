@@ -1,6 +1,6 @@
 // Arrays 
 var outCome = [];
-var passwordLength = 128;
+var passwordLength = 8;
 
 var numList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 var symList = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
@@ -15,19 +15,28 @@ generateBtn.addEventListener("click", writePassword);
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+  var correctPrompts = prompts();
 
-  passwordText.value = password;
-
+  if(correctPrompts) {
+    var newPassword = generatePassword();
+    var passwordText = document.querySelector("#password");
+    passwordText.value = newPassword;
+  }
 }
 
 function generatePassword() {
-
+  var password = "";
+  for(var i = 0; i < passwordLength; i++) {
+    var randomLetter = Math.floor(Math.random() * outCome.length);
+    password = password + outCome[randomLetter];
+  }
+  return password;
 }
 
 function prompt() {
+  outcome = [];
   passwordLength = parseInt(window.prompt("How long do you want your password to be? Pick from 8 to 128 characters."));
+
   if(isNaN(passwordLength) || passwordLength < 8 || passwordLength > 128) {
     window.alert("You should have 8 to 128 characters in your password!");
     return;
